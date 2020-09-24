@@ -1,0 +1,28 @@
+{
+  "name": "faastcgi",
+  "version": "0.0.1",
+  "description": "A FaaS system served via the FastCGI protocol",
+  "main": "faastcgi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jangxx/node-FaastCGI.git"
+  },
+  "keywords": [
+    "faas",
+    "fastcgi"
+  ],
+  "author": "Jan Scheiper <jangxx@protonmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jangxx/node-FaastCGI/issues"
+  },
+  "homepage": "https://github.com/jangxx/node-FaastCGI#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-fastcgi": "file:../node-fastcgi"
+  }
+}
