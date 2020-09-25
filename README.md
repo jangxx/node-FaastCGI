@@ -1,2 +1,12 @@
-# node-FaastCGI
-A Node.js FaaS system which is accessed via the FastCGI protocol, to be integrated into nginx and other FCGI clients.
+# FaastCGI
+Deploy your Node scripts by simply copying them on a server!
+
+## File structure
+
+`enableSession`: Enable the built-in session system based on `express-session`.
+
+`sessionOpts`
+
+`middleware`
+
+`main`
