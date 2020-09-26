@@ -131,7 +131,17 @@ process.on("message", message => {
         loadedFile.middleware(app, { express });
     }
 
-    app.use(loadedFile.main);
+    app.all("*", loadedFile.main);
+
+    // error handler
+    app.use(function(err, req, res, next) {
+        if (err != null && !loadedFile.showErrors) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            next(err, req, res);
+        }
+    });
 
     // execute the handler chain
     app(req, res);

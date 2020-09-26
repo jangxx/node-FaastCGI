@@ -72,6 +72,10 @@ middleware: function(app, builtins) {
 Set this value to a truthy value to enable the built-in session system based on `express-session`.
 You could of course run your own session middleware in the middleware function, but the builtin session is a very convenient way to get sessions working without much overhead.
 
+`showErrors` (optional)  
+If this is set to true, an a trace of each error occuring in the main function will be sent back as a response to a request.
+The default behavior will output the error in the console, but only reply with a HTTP 500 error.
+
 `sessionOpts` (optional)  
 Additional options to give to the `express-session` constructor.
 Use this to change cookie settings for example.

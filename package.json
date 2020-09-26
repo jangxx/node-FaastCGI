@@ -1,6 +1,6 @@
 {
   "name": "faastcgi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A FaaS system served via the FastCGI protocol",
   "main": "faastcgi.js",
   "scripts": {
