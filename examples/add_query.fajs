@@ -1,0 +1,16 @@
+// Add numeric values from query parameters together
+// Example add_query.fajs?a=5&b=10&c=2 -> 17
+
+module.exports = {
+    main: function(req, res) {
+        let result = 0;
+        for (let key in req.query) {
+            const num = parseInt(req.query[key]);
+            if (!isNaN(num)) {
+                result += num;
+            }
+        }
+
+        res.send(`result: ${result}\n`);
+    },
+};

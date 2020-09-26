@@ -1,6 +1,6 @@
 {
   "name": "faastcgi",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A FaaS system served via the FastCGI protocol",
   "main": "faastcgi.js",
   "scripts": {
@@ -12,12 +12,17 @@
   },
   "keywords": [
     "faas",
-    "fastcgi"
+    "fastcgi",
+    "serverless",
+    "lamdba"
   ],
   "author": "Jan Scheiper <jangxx@protonmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jangxx/node-FaastCGI/issues"
+  },
+  "bin": {
+    "faastcgi": "./faastcgi.js"
   },
   "homepage": "https://github.com/jangxx/node-FaastCGI#readme",
   "dependencies": {

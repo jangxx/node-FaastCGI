@@ -1,0 +1,14 @@
+// example which uses a session to count the number of times the page has been reloaded
+
+module.exports = {
+    enableSession: true,
+    main: function(req, res) {
+        if (req.session.count == undefined) {
+            req.session.count = 0;
+        }
+        
+        req.session.count++;
+
+        res.send(`You have visited this site ${req.session.count} time(s)`);
+    },
+};

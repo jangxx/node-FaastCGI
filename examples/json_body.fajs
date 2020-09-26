@@ -1,0 +1,25 @@
+// An example which uses the built-in json bodyparser to handle POST bodies. Each number is multiplied by 3 and each string gets a " * 3" appended to it
+// functionality: POST { "a": 123, "b": "hey", "c": null, "d": { "e": 1337 }} -> {"a":369,"b":"hey * 3","c":null,"d":{"e":4011}}
+
+module.exports = {
+    middleware: function(app, builtins) {
+        app.use(builtins.express.json());
+    },
+    main: function(req, res) {
+        res.json(timesThree(req.body));
+    },
+};
+
+function timesThree(obj) {
+    for (let prop in obj) {
+        if (typeof obj[prop] == "number") {
+            obj[prop] *= 3;
+        } else if (typeof obj[prop] == "string") {
+            obj[prop] += " * 3";
+        } else if (typeof obj[prop] == "object") {
+            obj[prop] = timesThree(obj[prop]);
+        }
+    }
+
+    return obj;
+}

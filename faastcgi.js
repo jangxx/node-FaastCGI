@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const config = require("./config")();
+const packageJson = require("./package.json");
 
 const child_process = require("child_process");
 const path = require("path");
@@ -35,7 +36,7 @@ const fcgiServer = fcgi.createServer(function(req, res) {
 
     if (!fs.existsSync(scriptPath)) {
         console.log(`Could not find script ${scriptPath}`);
-        res.statusCode = 500;
+        res.statusCode = 404;
         res.end();
         return;
     }
@@ -95,20 +96,16 @@ const fcgiServer = fcgi.createServer(function(req, res) {
             rp.kill();
         }, 1000);
     });
-
-    // fill up the queue with new runners again
-    for (let i = runnerProcs.length; i < config.maxRunners; i++) {
-        createRunner();
-    }
 });
 
+console.log(`Node FaastCGI v${packageJson.version}`);
 if (config.socketPath != null) {
     fcgiServer.listen(config.socketPath, () => {
-        console.log(`Server is listening on ${config.socketPath}`);
+        console.log(`FastCGI server is listening on ${config.socketPath}`);
     });
 } else {
     fcgiServer.listen(config.port, config.address, () => {
-        console.log(`Server is listening on ${config.address}:${config.port}`);
+        console.log(`FastCGI server is listening on ${config.address}:${config.port}`);
     });
 }
 
@@ -125,6 +122,11 @@ function createRunner() {
     rp.on("exit", () => {
         if (runnerProcs.includes(rp)) {
             runnerProcs.splice(runnerProcs.indexOf(rp), 1);
+        }
+
+        // fill up the queue with new runners again
+        for (let i = runnerProcs.length; i < config.maxRunners; i++) {
+            createRunner();
         }
     });
 

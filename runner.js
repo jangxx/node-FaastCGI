@@ -1,5 +1,6 @@
 const fs = require("fs");
 const http = require("http");
+const crypto = require("crypto");
 const express = require("express");
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
@@ -108,20 +109,26 @@ process.on("message", message => {
         exit(1);
     }
 
+    const sessionOpts = loadedFile.sessionOpts || {};
+
     if (loadedFile.enableSession) {
         app.use(session(mergeOptions({
+            // defaults that can be overwritten:
+            saveUninitialized: false,
+        }, sessionOpts, {
+            // these defaults can not be changed:
             store: new SQLiteStore({
                 db: "faastcgi-sessions.sqlite3",
                 dir: process.env.SESSION_DB_PATH,
             }),
             secret: process.env.SESSION_SECRET,
             resave: false,
-            saveUninitialized: true,
-        }, loadedFile.sessionOpts)));
+            name: `sid.${sha1(message.file.cwd)}`, // each document root has unique cookies
+        })));
     }
 
     if ("middleware" in loadedFile && typeof loadedFile.middleware == "function") {
-        loadedFile.middleware(app);
+        loadedFile.middleware(app, { express });
     }
 
     app.use(loadedFile.main);
@@ -140,4 +147,10 @@ function exit(code) {
     reqStream.close();
     process.disconnect();
     process.exit(code);
+}
+
+function sha1(input) {
+    const hash = crypto.createHash("sha1");
+    hash.update(input);
+    return hash.digest("hex");
 }
