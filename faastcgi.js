@@ -117,6 +117,8 @@ function createRunner() {
             RUNNER_ID: uuid.v4(),
         },
         stdio: [ "inherit", "inherit", "inherit", "ipc", "pipe", "pipe" ],
+        uid: (config.runner.user !== null) ? Number(config.runner.user) : null,
+        gid: (config.runner.group !== null) ? Number(config.runner.group) : null,
     });
 
     rp.on("exit", () => {
