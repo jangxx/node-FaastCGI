@@ -4,6 +4,14 @@ FaastCGI is a FaaS (function as a service) system, which is build on top of `nod
 Running the script is then as easy as sending a request to the file you want to run.
 Basically, this makes running Node.js scripts as easy and convenient as running PHP scripts, but comes with the same tradeoff, i.e. you can't run long running processes with this.
 
+## Features
+
+- Run short Node.js functions without any deployment. Copy the files to a web-accessible directory and you are good to go.
+- Full support for everything Node has to offer, i.e. all local and external modules.
+- Based on express, so native support for middleware.
+- Built-in session system, to get a quick function running even faster.
+- High performance: Each function runs in its own process so nothing gets slowed down by the Node event loop.
+
 ## Installation
 
 Simply install the module globally by running
